@@ -6,5 +6,7 @@ namespace UnitOfMeasures.Domain.Models
     {
         public int BaseMeasuremenID { get; set; }
         public float Ratio { get; set; }
+
+        public virtual BaseMeasurementUnit BaseMeasurementUnit { get; set; }
     }
 }
