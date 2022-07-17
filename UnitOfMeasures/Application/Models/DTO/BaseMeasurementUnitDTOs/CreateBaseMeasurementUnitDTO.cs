@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UnitOfMeasures.Application.DTO.MeasurementDimensionDTOs;
+using UnitOfMeasures.Application.Models.DTO.MeasurementDimensionDTOs;
 
-namespace UnitOfMeasures.Application.DTO.BaseMeasurementUnitDTOs
+namespace UnitOfMeasures.Application.Models.DTO.BaseMeasurementUnitDTOs
 {
     public class CreateBaseMeasurementUnitDTO
     {

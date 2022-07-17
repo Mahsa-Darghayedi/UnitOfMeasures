@@ -1,9 +1,9 @@
-﻿using UnitOfMeasures.Application.DTO.MeasurementDimensionDTOs;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using UnitOfMeasures.Application.Models.DTO.MeasurementDimensionDTOs;
 
-namespace UnitOfMeasures.Application.DTO.BaseMeasurementUnitDTOs
+namespace UnitOfMeasures.Application.Models.DTO.BaseMeasurementUnitDTOs
 {
-    public class BaseMeasurementUnitDetailDTO 
+    public class BaseMeasurementUnitDetailDTO
     {
         [Required]
         public int ID { get; set; }

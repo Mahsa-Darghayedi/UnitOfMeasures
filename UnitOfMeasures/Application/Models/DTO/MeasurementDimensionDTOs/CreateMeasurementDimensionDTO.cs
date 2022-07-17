@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UnitOfMeasures.Application.DTO.MeasurementDimensionDTOs
+namespace UnitOfMeasures.Application.Models.DTO.MeasurementDimensionDTOs
 
 {
     public class CreateMeasurementDimensionDTO
     {
-        [Required(AllowEmptyStrings =false)]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
     }
 }

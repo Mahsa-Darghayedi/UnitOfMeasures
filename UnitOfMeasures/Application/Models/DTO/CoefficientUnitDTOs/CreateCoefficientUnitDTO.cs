@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UnitOfMeasures.Application.DTO.BaseMeasurementUnitDTOs;
+using UnitOfMeasures.Application.Models.DTO.BaseMeasurementUnitDTOs;
 
-namespace UnitOfMeasures.Application.DTO.CoefficientUnitDTOs
+namespace UnitOfMeasures.Application.Models.DTO.CoefficientUnitDTOs
 {
     public class CreateCoefficientUnitDTO
     {

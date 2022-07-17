@@ -1,7 +1,9 @@
-﻿using UnitOfMeasures.Application.DTO.BaseMeasurementUnitDTOs;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using UnitOfMeasures.Application.Utilities;
+using UnitOfMeasures.Application.Models.DTO.BaseMeasurementUnitDTOs;
+using UnitOfMeasures.Application.Models.Validations;
 
-namespace UnitOfMeasures.Application.DTO.FormulaUnitDTOs
+namespace UnitOfMeasures.Application.Models.DTO.FormulaUnitDTOs
 {
     public class CreateFormulaUnitDTO
     {
@@ -12,8 +14,10 @@ namespace UnitOfMeasures.Application.DTO.FormulaUnitDTOs
         [MaxLength(10)]
         public string Code { get; set; }
         [Required(AllowEmptyStrings = false)]
+        [FormulaValidator]
         public string ConvertFromBaseFormula { get; set; }
         [Required(AllowEmptyStrings = false)]
+        [FormulaValidator]
         public string ConvertToBaseFormula { get; set; }
         [Required]
         public BaseMeasurementUnitDetailDTO BaseMeasurementUnitDetailDTO { get; set; }
