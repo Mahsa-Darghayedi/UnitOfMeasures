@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using UnitOfMeasures.Application.Contracts.Extensions;
 using UnitOfMeasures.Infrastructure.Persistents.Extensions;
 
 namespace UnitOfMeasures.Application.Extensions
@@ -14,6 +15,10 @@ namespace UnitOfMeasures.Application.Extensions
             services.AddSwaggerGen();
             services.AddApplicationDbContext(configuration.GetConnectionString("MeasureDBConnectionString"));
             services.AddAutoMapper(assembly);
+            services.AddContractsConfig();
+
+
+
             return services;
         }
     }

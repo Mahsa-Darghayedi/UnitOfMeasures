@@ -8,8 +8,8 @@ namespace UnitOfMeasures.Infrastructure.Persistents.DBContext
 
         public MeasureDBContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<MeasurementDimension> MeasurementDimensions { get; set; }
         public DbSet<BaseMeasurementUnit> BaseMeasurementUnits  { get; set; }
+        public DbSet<ChildUnit> ChildUnits  { get; set; }
         public DbSet<CoefficientUnit> CoefficientUnits  { get; set; }
         public DbSet<FormulaUnit> FormulaUnits  { get; set; }
 

@@ -12,10 +12,11 @@ namespace UnitOfMeasures.Domain.ModelsConfig
 
             builder.HasKey("Id").HasName("CoefficientUnitID");
 
-            builder.Property(bm => bm.Id).HasColumnName("CoefficientUnitID").IsRequired().ValueGeneratedOnAdd();
-            builder.Property(bm => bm.Name).HasMaxLength(50).IsRequired();
-            builder.Property(bm => bm.Code).HasMaxLength(10).IsRequired();
-            builder.Property(bm => bm.BaseMeasuremenID).IsRequired();
+            builder.Property(bm => bm.Id).HasColumnName("CoefficientUnitID").IsRequired();
+            builder.Property(bm => bm.Ratio).IsRequired();
+
+            builder.HasOne(c => c.ChildUnit).WithOne().HasForeignKey<CoefficientUnit>(b => b.Id);
+            builder.HasIndex(c => c.Id).IsUnique();
 
         }
     }

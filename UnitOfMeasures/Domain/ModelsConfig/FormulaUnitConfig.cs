@@ -12,12 +12,13 @@ namespace UnitOfMeasures.Domain.ModelsConfig
 
             builder.HasKey("Id").HasName("FormulaUnitID");
 
-            builder.Property(bm => bm.Id).HasColumnName("FormulaUnitID").IsRequired().ValueGeneratedOnAdd();
-            builder.Property(bm => bm.Name).HasMaxLength(50).IsRequired();
-            builder.Property(bm => bm.Code).HasMaxLength(10).IsRequired();
-            builder.Property(bm => bm.BaseMeasuremenID).IsRequired();
+            builder.Property(bm => bm.Id).HasColumnName("FormulaUnitID").IsRequired();
             builder.Property(bm => bm.ConvertFromBaseFormula).IsRequired();
             builder.Property(bm => bm.ConvertToBaseFormula).IsRequired();
+
+            builder.HasOne(c => c.ChildUnit).WithOne().HasForeignKey<FormulaUnit>(b=> b.Id);
+            builder.HasIndex(c => c.Id).IsUnique();
+
         }
     }
 }

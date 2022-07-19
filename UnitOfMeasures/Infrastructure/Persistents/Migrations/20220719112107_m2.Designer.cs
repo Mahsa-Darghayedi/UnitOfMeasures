@@ -11,8 +11,8 @@ using UnitOfMeasures.Infrastructure.Persistents.DBContext;
 namespace UnitOfMeasures.Migrations
 {
     [DbContext(typeof(MeasureDBContext))]
-    [Migration("20220716120650_mig1")]
-    partial class mig1
+    [Migration("20220719112107_m2")]
+    partial class m2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,9 @@ namespace UnitOfMeasures.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("MeasurementDimensionID")
-                        .HasColumnType("int");
+                    b.Property<string>("MeasurementDimensionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,18 +49,18 @@ namespace UnitOfMeasures.Migrations
                     b.HasKey("Id")
                         .HasName("BaseMeasurementUnitID");
 
-                    b.HasIndex("MeasurementDimensionID")
+                    b.HasIndex("MeasurementDimensionName")
                         .IsUnique();
 
                     b.ToTable("BaseMeasurementUnits", (string)null);
                 });
 
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.CoefficientUnit", b =>
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.ChildUnit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("CoefficientUnitID");
+                        .HasColumnName("ChildUnitID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -76,13 +77,31 @@ namespace UnitOfMeasures.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.HasKey("Id")
+                        .HasName("ChildUnitID");
+
+                    b.HasIndex("BaseMeasuremenID");
+
+                    b.ToTable("ChildUnits", (string)null);
+                });
+
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.CoefficientUnit", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("CoefficientUnitID");
+
+                    b.Property<int>("ChildUnitId")
+                        .HasColumnType("int");
+
                     b.Property<float>("Ratio")
                         .HasColumnType("real");
 
                     b.HasKey("Id")
                         .HasName("CoefficientUnitID");
 
-                    b.HasIndex("BaseMeasuremenID");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("CoefficientUnits", (string)null);
                 });
@@ -90,19 +109,11 @@ namespace UnitOfMeasures.Migrations
             modelBuilder.Entity("UnitOfMeasures.Domain.Models.FormulaUnit", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("FormulaUnitID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("BaseMeasuremenID")
+                    b.Property<int>("ChildUnitId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("ConvertFromBaseFormula")
                         .IsRequired()
@@ -112,51 +123,19 @@ namespace UnitOfMeasures.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id")
                         .HasName("FormulaUnitID");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("FormulaUnits", (string)null);
                 });
 
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.MeasurementDimension", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("MeasurementDimensionID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id")
-                        .HasName("MeasurementDimensionID");
-
-                    b.ToTable("MeasurementDimensions", (string)null);
-                });
-
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.BaseMeasurementUnit", b =>
-                {
-                    b.HasOne("UnitOfMeasures.Domain.Models.MeasurementDimension", "MeasurementDimension")
-                        .WithMany("BaseMeasurementUnits")
-                        .HasForeignKey("MeasurementDimensionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MeasurementDimension");
-                });
-
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.CoefficientUnit", b =>
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.ChildUnit", b =>
                 {
                     b.HasOne("UnitOfMeasures.Domain.Models.BaseMeasurementUnit", "BaseMeasurementUnit")
-                        .WithMany("CoefficientUnits")
+                        .WithMany("ChildUnits")
                         .HasForeignKey("BaseMeasuremenID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -164,14 +143,31 @@ namespace UnitOfMeasures.Migrations
                     b.Navigation("BaseMeasurementUnit");
                 });
 
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.BaseMeasurementUnit", b =>
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.CoefficientUnit", b =>
                 {
-                    b.Navigation("CoefficientUnits");
+                    b.HasOne("UnitOfMeasures.Domain.Models.ChildUnit", "ChildUnit")
+                        .WithOne()
+                        .HasForeignKey("UnitOfMeasures.Domain.Models.CoefficientUnit", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChildUnit");
                 });
 
-            modelBuilder.Entity("UnitOfMeasures.Domain.Models.MeasurementDimension", b =>
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.FormulaUnit", b =>
                 {
-                    b.Navigation("BaseMeasurementUnits");
+                    b.HasOne("UnitOfMeasures.Domain.Models.ChildUnit", "ChildUnit")
+                        .WithOne()
+                        .HasForeignKey("UnitOfMeasures.Domain.Models.FormulaUnit", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChildUnit");
+                });
+
+            modelBuilder.Entity("UnitOfMeasures.Domain.Models.BaseMeasurementUnit", b =>
+                {
+                    b.Navigation("ChildUnits");
                 });
 #pragma warning restore 612, 618
         }
