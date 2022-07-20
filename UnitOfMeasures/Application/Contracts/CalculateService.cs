@@ -95,7 +95,6 @@ namespace UnitOfMeasures.Application.Contracts
             return double.NaN;
         }
 
-        #region PrivateMethods
         public string GetParentCode(string childCode)
         {
             if (string.IsNullOrEmpty(childCode) || string.IsNullOrWhiteSpace(childCode))
@@ -167,6 +166,7 @@ namespace UnitOfMeasures.Application.Contracts
             }
             throw new InvalidOperationException();
         }
+        #region PrivateMethods
 
         private async Task<List<UnitsDTO>?> GetAllBaseUnits(string measureName)
         {

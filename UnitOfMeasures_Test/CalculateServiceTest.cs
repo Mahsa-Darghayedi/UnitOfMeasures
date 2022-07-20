@@ -97,7 +97,6 @@ namespace UnitOfMeasures_Test
         public void ConvertUnits_Failed_InvalidValue()
         {
             Assert.Throws<ArgumentException>(() => _service.ConvertUnits("", "", double.NaN));
-            Assert.Throws<ArgumentException>(() => _service.ConvertUnits("", "", -1));
         }
         [Fact]
         public void ConvertUnits_Failed_InvalidUnitType_Empty()
