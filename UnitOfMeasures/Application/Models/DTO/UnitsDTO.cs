@@ -1,5 +1,6 @@
+
 ﻿using System.ComponentModel.DataAnnotations;
-using UnitOfMeasures.Application.Models.Enums;
+﻿using UnitOfMeasures.Application.Models.Enums;
 
 namespace UnitOfMeasures.Application.Models.DTO
 {
@@ -11,5 +12,6 @@ namespace UnitOfMeasures.Application.Models.DTO
         public string Name { get; set; }
         [Required]
         public UnitTypeEnum Type { get; set; }
+
     }
 }
